@@ -28,6 +28,23 @@ export class UrlController {
     return { shortUrl: saved.shortUrl };
   }
 
+  @Get('info/:shortUrl')
+  async getUrlInfo(@Param('shortUrl') shortUrl: string) {
+    const url = await this.urlService.getUrlInfo(shortUrl);
+
+    if (!url) {
+      throw new NotFoundException('Short Url not found');
+    }
+
+    return url;
+  }
+
+  @Delete('delete/:shortUrl')
+  async deleteUrl(@Param('shortUrl') shortUrl: string) {
+    await this.urlService.deleteUrl(shortUrl);
+    return { message: 'Short URL was deleted' };
+  }
+
   @Get(':shortUrl')
   async redirectToOriginal(
     @Param('shortUrl') shortUrl: string,
@@ -49,22 +66,5 @@ export class UrlController {
     await this.analyticsService.logClickAndIncrement(shortUrl, ip);
 
     return res.redirect(url.originalUrl);
-  }
-
-  @Get('info/:shortUrl')
-  async getUrlInfo(@Param('shortUrl') shortUrl: string) {
-    const url = await this.urlService.getUrlInfo(shortUrl);
-
-    if (!url) {
-      throw new NotFoundException('Short Url not found');
-    }
-
-    return url;
-  }
-
-  @Delete('delete/:shortUrl')
-  async deleteUrl(@Param('shortUrl') shortUrl: string) {
-    await this.urlService.deleteUrl(shortUrl);
-    return { message: 'Short URL was deleted' };
   }
 }

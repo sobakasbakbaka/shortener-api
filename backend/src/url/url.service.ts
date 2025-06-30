@@ -37,7 +37,11 @@ export class UrlService {
   }
 
   async findByShortUrl(shortUrl: string) {
-    return this.urlRepository.findOneBy({ shortUrl });
+    return this.urlRepository.findOne({
+      where: {
+        shortUrl,
+      },
+    });
   }
 
   async incrementClickCount(id: string) {
