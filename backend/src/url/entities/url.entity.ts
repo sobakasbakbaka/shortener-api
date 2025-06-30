@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { ClickEvent } from '../../click-event/entities/click-event.entity';
+import { Click } from '../../analytics/entities/click.entity';
 
 @Entity('urls')
 export class Url {
@@ -27,6 +27,6 @@ export class Url {
   @Column({ default: 0 })
   clickCount: number;
 
-  @OneToMany(() => ClickEvent, (click) => click.url)
-  clickEvents: ClickEvent[];
+  @OneToMany(() => Click, (click) => click.url)
+  clickEvents: Click[];
 }

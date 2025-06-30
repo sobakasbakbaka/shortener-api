@@ -8,7 +8,7 @@ import {
 import { Url } from '../../url/entities/url.entity';
 
 @Entity()
-export class ClickEvent {
+export class Click {
   @PrimaryGeneratedColumn()
   id: number;
 
