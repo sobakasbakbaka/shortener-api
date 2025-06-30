@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UrlModule } from './url/url.module';
+import { ClickEventModule } from './click-event/click-event.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UrlModule } from './url/url.module';
       synchronize: true, //TODO: disable before deploy
     }),
     UrlModule,
+    ClickEventModule,
   ],
   controllers: [AppController],
   providers: [AppService],

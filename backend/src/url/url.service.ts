@@ -30,7 +30,7 @@ export class UrlService {
       return await this.urlRepository.save(url);
     } catch (error) {
       if (error.code === '23505') {
-        throw new ConflictException('Alias alredy exists');
+        throw new ConflictException('Alias already exists');
       }
       throw new InternalServerErrorException('Failed to save link');
     }
