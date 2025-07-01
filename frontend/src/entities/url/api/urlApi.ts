@@ -20,7 +20,7 @@ export const urlApi = {
     return response.data;
   },
   getAnalytics: async (shortUrl: string) => {
-    const response = await api.get<Analytics>(`/url/analytics/${shortUrl}`);
+    const response = await api.get<Analytics>(`/analytics/${shortUrl}`);
     return response.data;
   },
 };

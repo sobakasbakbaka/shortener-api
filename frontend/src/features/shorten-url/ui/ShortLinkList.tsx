@@ -1,9 +1,12 @@
 import { useShortLinks } from '../model/useShortLinks.ts';
 import { Button, Group, Stack, Text, Title } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
+import { LinkAnalyticsModal } from '@/features/link-analytics/ui/LinkAnalyticsModal.tsx';
+import { useDisclosure } from '@mantine/hooks';
 
 export const ShortLinkList = () => {
   const { links, removeLink, clearLinks } = useShortLinks();
+  const [opened, { open, close }] = useDisclosure();
 
   if (links.length === 0) {
     return null;
@@ -39,14 +42,23 @@ export const ShortLinkList = () => {
               {link.originalUrl}
             </Text>
           </div>
-          <Button
-            color={'red'}
-            size={'xs'}
-            variant={'subtle'}
-            onClick={() => removeLink(link.shortUrl)}
-          >
-            <IconTrash size={16} />
-          </Button>
+          <div>
+            <Button onClick={open}>Подробнее</Button>
+            <LinkAnalyticsModal
+              shortUrl={link.shortUrl}
+              opened={opened}
+              onClose={close}
+            />
+
+            <Button
+              color={'red'}
+              size={'xs'}
+              variant={'subtle'}
+              onClick={() => removeLink(link.shortUrl)}
+            >
+              <IconTrash size={16} />
+            </Button>
+          </div>
         </Group>
       ))}
     </Stack>
