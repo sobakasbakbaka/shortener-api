@@ -55,3 +55,8 @@ ORM
 ### Обязательный функционал:
 
 Фронтэнд для создания коротких ссылок с функциями удаления и получения информации (статистики).
+
+
+docker-compose up --build
+docker-compose -f docker-compose.dev.yml up --build
+

@@ -16,7 +16,7 @@ services:
     build:
       context: ./backend
     container_name: shortener-backend
-    command: npm run start:prod
+    command: npm run start:dev
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -30,9 +30,16 @@ services:
   frontend:
     build:
       context: ./frontend
-    container_name: shortener-frontend
+      dockerfile: Dockerfile.dev
+    container_name: shortener-frontend-dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     ports:
-      - "80:80"
+      - "5173:5173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: npm run dev
     depends_on:
       - backend
 
