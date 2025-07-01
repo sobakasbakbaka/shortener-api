@@ -1,3 +1,11 @@
+import { ShortenUrlForm, ShortLinkList } from '@/features/shorten-url';
+import { Stack } from '@mantine/core';
+
 export const App = () => {
-  return <div>Test</div>;
+  return (
+    <Stack p="md">
+      <ShortenUrlForm />
+      <ShortLinkList />
+    </Stack>
+  );
 };
