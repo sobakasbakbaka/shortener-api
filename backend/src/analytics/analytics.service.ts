@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Url } from '../url/entities/url.entity';
@@ -36,7 +36,7 @@ export class AnalyticsService {
     });
 
     if (!url) {
-      throw new Error('URL not found');
+      throw new NotFoundException('URL not found');
     }
 
     const recentClicks = await this.analyticsRepository.find({
@@ -46,8 +46,8 @@ export class AnalyticsService {
     });
 
     return {
-      totalClicks: url.clickCount,
-      recentIPs: recentClicks.map((click) => click.ip),
+      clickCount: url.clickCount,
+      lastClicks: recentClicks.map((click) => click.ip),
     };
   }
 }
