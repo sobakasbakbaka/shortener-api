@@ -12,7 +12,6 @@ export default defineConfig({
       usePolling: true,
     },
     proxy: {
-      '/url': 'http://localhost:3000',
       '/analytics': 'http://localhost:3000',
     },
   },

@@ -15,7 +15,7 @@ import { UrlService } from './url.service';
 import { CreateUrlDto } from './dto/create-url.dto';
 import { AnalyticsService } from '../analytics/analytics.service';
 
-@Controller('url')
+@Controller()
 export class UrlController {
   constructor(
     private readonly urlService: UrlService,

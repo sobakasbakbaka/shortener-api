@@ -92,11 +92,11 @@ export const ShortenUrlForm = () => {
           title={'Ссылка создана'}
         >
           <a
-            href={`${import.meta.env.VITE_API_URL}/url/${shortUrl}`}
+            href={`${import.meta.env.VITE_API_URL}/${shortUrl}`}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {import.meta.env.VITE_API_URL}/url/{shortUrl}
+            {import.meta.env.VITE_API_URL}/{shortUrl}
           </a>
         </Notification>
       )}

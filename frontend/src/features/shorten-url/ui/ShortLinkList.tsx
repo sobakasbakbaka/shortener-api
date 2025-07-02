@@ -27,11 +27,11 @@ export const ShortLinkList = () => {
           <div>
             <Text size={'sm'}>
               <a
-                href={`${import.meta.env.VITE_API_URL}/url/${link.shortUrl}`}
+                href={`${import.meta.env.VITE_API_URL}/${link.shortUrl}`}
                 target={'_blank'}
                 rel={'noopener noreferrer'}
               >
-                {import.meta.env.VITE_API_URL}/url/{link.shortUrl}
+                {import.meta.env.VITE_API_URL}/{link.shortUrl}
               </a>
             </Text>
             <Text size={'xs'} c={'dimmed'}>
