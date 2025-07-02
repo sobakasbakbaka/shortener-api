@@ -1,5 +1,4 @@
 import type {
-  Analytics,
   ShortenUrlDto,
   ShortenUrlResponse,
   UrlInfo,
@@ -17,10 +16,6 @@ export const urlApi = {
   },
   delete: async (shortUrl: string) => {
     const response = await api.delete(`/url/delete/${shortUrl}`);
-    return response.data;
-  },
-  getAnalytics: async (shortUrl: string) => {
-    const response = await api.get<Analytics>(`/analytics/${shortUrl}`);
     return response.data;
   },
 };

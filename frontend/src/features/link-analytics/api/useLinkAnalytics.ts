@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { urlApi } from '@/entities/url';
+import { urlApi } from '@/entities/shorten-url';
+import { analyticsApi } from '@/entities/link-analytics';
 
 export const useLinkAnalytics = (shortUrl: string) => {
   const infoQuery = useQuery({
@@ -10,7 +11,7 @@ export const useLinkAnalytics = (shortUrl: string) => {
 
   const analyticsQuery = useQuery({
     queryKey: ['link-analytics', shortUrl],
-    queryFn: () => urlApi.getAnalytics(shortUrl),
+    queryFn: () => analyticsApi.getAnalytics(shortUrl),
     enabled: !!shortUrl,
   });
 

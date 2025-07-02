@@ -3,7 +3,7 @@ import {
   type ShortenUrlDto,
   type ShortenUrlResponse,
   urlApi,
-} from '@/entities/url';
+} from '@/entities/shorten-url';
 
 export const useShortenUrl = (
   options?: UseMutationOptions<ShortenUrlResponse, unknown, ShortenUrlDto>,

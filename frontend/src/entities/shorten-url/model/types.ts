@@ -13,8 +13,3 @@ export interface UrlInfo {
   createdAt: string;
   clickCount: number;
 }
-
-export interface Analytics {
-  clickCount: number;
-  lastClicks: string[];
-}

@@ -1,5 +1,5 @@
 import { useLocalStorage } from '@mantine/hooks';
-import { urlApi } from '@/entities/url';
+import { urlApi } from '@/entities/shorten-url';
 
 type ShortLink = {
   originalUrl: string;

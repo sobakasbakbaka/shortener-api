@@ -1,1 +1,1 @@
-export * from './ui/LinkAnalyticsModal.tsx';
+export * from './ui/LinkAnalyticsModal';
