@@ -35,7 +35,16 @@ export const ShortLinkList = () => {
                 {window.location.href}r/{link.shortUrl}
               </a>
             </Text>
-            <Text size={'xs'} c={'dimmed'}>
+            <Text
+              size={'xs'}
+              c={'dimmed'}
+              w={240}
+              style={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
               {link.originalUrl}
             </Text>
           </div>

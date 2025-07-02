@@ -40,7 +40,7 @@ export const LinkAnalyticsModal = ({
           title={'Ошибка'}
           icon={<IconAlertTriangle size={16} />}
         >
-          {'Не удалось загрузить данные'}
+          Не удалось загрузить данные
         </Alert>
       )}
 
@@ -52,33 +52,46 @@ export const LinkAnalyticsModal = ({
               icon={<IconAlertTriangle size={18} />}
               title={'Ссылка недействительна'}
             >
-              {'Ссылка просрочена и больше не активна.'}
+              Ссылка просрочена и больше не активна.
             </Alert>
           )}
 
           <Paper shadow={'xs'} p={'md'} withBorder>
-            <Text size={'sm'} mb={4}>
-              <b>{'Оригинальный URL:'}</b>{' '}
-              <a
-                href={info.originalUrl}
-                target={'_blank'}
-                rel={'noopener noreferrer'}
+            <Text size="sm" mb={4}>
+              <b>Оригинальный URL:</b>
+            </Text>
+            <a
+              href={info.originalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none' }}
+            >
+              <Text
+                size="xs"
+                c="dimmed"
+                w={240}
+                style={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: 'block',
+                }}
+                title={info.originalUrl}
               >
                 {info.originalUrl}
-              </a>
+              </Text>
+            </a>
+            <Text size={'sm'} mb={4}>
+              <b>Создана:</b> {new Date(info.createdAt).toLocaleString('ru-RU')}
             </Text>
             <Text size={'sm'} mb={4}>
-              <b>{'Создана:'}</b>{' '}
-              {new Date(info.createdAt).toLocaleString('ru-RU')}
-            </Text>
-            <Text size={'sm'} mb={4}>
-              <b>{'Кликов:'}</b> {info.clickCount}
+              <b>Кликов:</b> {info.clickCount}
             </Text>
           </Paper>
 
           <Paper shadow={'xs'} p={'md'} withBorder>
             <Text size={'sm'} mb={6}>
-              <b>{'Последние 5 IP:'}</b>
+              <b>Последние 5 IP:</b>
             </Text>
             <List
               spacing={'xs'}
@@ -89,8 +102,8 @@ export const LinkAnalyticsModal = ({
                 </ThemeIcon>
               }
             >
-              {analytics.lastClicks.map((ip) => (
-                <List.Item key={ip}>{ip}</List.Item>
+              {analytics.lastClicks.map((ip, index) => (
+                <List.Item key={index}>{ip}</List.Item>
               ))}
             </List>
           </Paper>

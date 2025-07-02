@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useForm } from '@mantine/form';
-import { Button, Group, Notification, Stack, TextInput } from '@mantine/core';
+import {
+  Button,
+  Group,
+  Notification,
+  Stack,
+  Text,
+  TextInput,
+} from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { IconCheck, IconX } from '@tabler/icons-react';
 import { useShortenUrl } from '../api/useShortenUrl';
@@ -85,7 +92,7 @@ export const ShortenUrlForm = () => {
             form.setFieldValue('expiresAt', date as Date | null)
           }
           clearable
-          // minDate={new Date()}
+          // minDate={new Date()} закомментировано, чтобы была возможность создавать ссылку с прошедшей датой
         />
         <Group justify={'flex-end'} mt={'md'}>
           <Button type={'submit'} loading={isPending}>
@@ -107,7 +114,18 @@ export const ShortenUrlForm = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {window.location.href}r/{shortUrl}
+              <Text
+                size={'xs'}
+                c={'dimmed'}
+                w={240}
+                style={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {window.location.href}r/{shortUrl}
+              </Text>
             </a>
             <CopyButton value={`${window.location.href}r/${shortUrl}`} />
           </Group>
