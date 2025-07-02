@@ -14,6 +14,8 @@ export const LinkAnalyticsModal = ({
 }: LinkAnalyticsModalProps) => {
   const { info, analytics, isLoading, isError } = useLinkAnalytics(shortUrl);
 
+  console.log('info:', info);
+
   return (
     <Modal
       opened={opened}
@@ -25,8 +27,14 @@ export const LinkAnalyticsModal = ({
       {isError && <Text c={'red'}>Не удалось загрузить данные</Text>}
       {!isLoading && info && analytics && (
         <Stack>
+          {info.isExpired && (
+            <Text size={'sm'} c={'red'}>
+              Сылка просрочена и больше не активна.
+            </Text>
+          )}
           <Text size={'sm'}>
-            <b>Оригинальный URL:</b> {info.originalUrl}
+            <b>Оригинальный URL:</b>{' '}
+            <a href={info.originalUrl}>{info.originalUrl}</a>
           </Text>
           <Text size={'sm'}>
             <b>Создана:</b> {new Date(info.createdAt).toLocaleString()}

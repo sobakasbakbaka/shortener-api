@@ -85,7 +85,7 @@ export const ShortenUrlForm = () => {
             form.setFieldValue('expiresAt', date as Date | null)
           }
           clearable
-          minDate={new Date()}
+          // minDate={new Date()}
         />
         <Group justify={'flex-end'} mt={'md'}>
           <Button type={'submit'} loading={isPending}>

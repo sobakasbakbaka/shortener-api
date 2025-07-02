@@ -36,7 +36,10 @@ export class UrlController {
       throw new NotFoundException('Short Url not found');
     }
 
-    return url;
+    const now = new Date();
+    const isExpired = !!url.expiresAt && new Date(url.expiresAt) < now;
+
+    return { ...url, isExpired };
   }
 
   @Delete('delete/:shortUrl')

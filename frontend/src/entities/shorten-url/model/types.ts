@@ -12,4 +12,5 @@ export interface UrlInfo {
   originalUrl: string;
   createdAt: string;
   clickCount: number;
+  isExpired: boolean;
 }
