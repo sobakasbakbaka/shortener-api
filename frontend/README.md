@@ -1,69 +1,127 @@
-# React + TypeScript + Vite
+# 🌐 Frontend — Shortener API
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Этот проект — фронтенд часть сервиса сокращения ссылок и аналитики переходов. Реализован на **React** с использованием **Vite**, **TypeScript** и современных библиотек для управления состоянием и запросами.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Основные возможности
 
-## Expanding the ESLint configuration
+- 🔗 Сокращение длинных ссылок
+- 📋 Просмотр и копирование коротких ссылок
+- 📊 Аналитика переходов по ссылкам
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Технологии
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+| Технология     | Назначение               |
+|----------------|--------------------------|
+| ⚛️ React       | UI-библиотека            |
+| ⚡ Vite         | Сборка проекта           |
+| 🗾 TypeScript  | Типизация                |
+| 🔄 React Query | Работа с данными и кешем |
+| 🌐 Axios       | HTTP-запросы             |
+| 🎨 Mantine     | UI-либа                  |
+| 🧹 ESLint      | Анализ кода              |
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 🚀 Запуск проекта
+
+### 🔧 Установка зависимостей
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 🧪 Запуск в режиме разработки
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+📍 Откроется по адресу: [http://localhost:5173](http://localhost:5173)
+
+### 🏗️ Сборка для продакшена
+
+```bash
+npm run build
+```
+
+🔍 Файлы будут находиться в папке `dist`.
+
+### 🔍 Линтинг кода
+
+```bash
+npm run lint
+```
+
+---
+
+## 🐳 Docker
+
+### Быстрый запуск
+
+```bash
+docker build -t shortener-frontend .
+docker run -p 5173:80 shortener-frontend
+```
+
+### Совместно с backend (`docker-compose`)
+
+```bash
+docker-compose up
+```
+
+---
+
+## 📁 Структура проекта (FSD)
+
+Проект построен по принципам Feature-Sliced Design (FSD), что обеспечивает масштабируемость, модульность и удобство поддержки кода.
+
+```
+frontend/
+├── public/                  # Статические файлы (иконки, favicons, и т.д.)
+├── src/                     # Исходный код приложения
+│   ├── app/                 # Провайдеры, роутинг, глобальные темы
+│   │   ├── providers/       # Провайдеры контекста (тема, роутер, React Query)
+│   │   └── ...
+│   ├── entities/            # Базовые бизнес-сущности (например, ссылка, аналитика)
+│   │   └── <entity>/        # Каждая сущность в отдельной папке
+│   │       ├── api/         # API-запросы, связанные с сущностью
+│   │       ├── model/       # Типы, модели, хелперы
+│   │       └── ...
+│   ├── features/            # Фичи — законченное пользовательское действие
+│   │   └── <feature>/       # Каждая фича в отдельной папке
+│   │       ├── api/         # Хуки для работы с API
+│   │       ├── model/       # Локальное состояние, хуки
+│   │       ├── ui/          # UI-компоненты фичи
+│   │       └── ...
+│   ├── pages/               # Страницы приложения (маршруты)
+│   │   └── <page>/          # Каждая страница в отдельной папке
+│   │       └── index.tsx    # Точка входа страницы
+│   ├── shared/              # Переиспользуемые модули и компоненты
+│   │   ├── api/             # Общие API-клиенты (например, axios)
+│   │   ├── ui/              # Общие UI-компоненты (кнопки, инпуты)
+│   │   └── ...
+│   └── main.tsx             # Точка входа приложения
+├── Dockerfile               # Продакшен сборка
+├── Dockerfile.dev           # Для разработки
+├── nginx.conf               # Конфиг nginx
+└── vite.config.ts           # Конфигурация Vite
+```
+
+### Краткое описание слоёв FSD:
+
+- **app/** — инициализация приложения, глобальные провайдеры, роутинг.
+- **entities/** — атомарные бизнес-сущности, не зависят от фич и страниц.
+- **features/** — пользовательские сценарии, объединяющие сущности и shared-компоненты.
+- **pages/** — страницы, каждая отвечает за отдельный маршрут.
+- **shared/** — общие утилиты, компоненты, типы, API-клиенты.
+
+> Подробнее о подходе: [feature-sliced.design](https://feature-sliced.design/ru)
+
+
+---
+
+> 💡 При необходимости добавьте файл `.env` и укажите `VITE_API_URL` для настройки API.

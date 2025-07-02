@@ -25,13 +25,13 @@ describe('Analytics (e2e)', () => {
     const originalUrl = 'https://openai.com';
 
     await request(app.getHttpServer())
-      .post('/url/shorten')
+      .post('/shorten')
       .send({ originalUrl, alias })
       .expect(201);
 
     for (let i = 0; i < 3; i++) {
       await request(app.getHttpServer())
-        .get(`/url/${alias}`)
+        .get(`/${alias}`)
         .set('X-Forwarded-For', `127.0.0.${i + 1}`)
         .expect(302);
     }

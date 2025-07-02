@@ -24,7 +24,7 @@ describe('URL Shortener (e2e)', () => {
     const alias = `test-${uuidv4().slice(0, 8)}`;
 
     const res = await request(app.getHttpServer())
-      .post('/url/shorten')
+      .post('/shorten')
       .send({
         originalUrl: 'https://example.com',
         alias,
@@ -40,16 +40,14 @@ describe('URL Shortener (e2e)', () => {
     const originalUrl = 'https://google.com';
 
     await request(app.getHttpServer())
-      .post('/url/shorten')
+      .post('/shorten')
       .send({
         originalUrl,
         alias,
       })
       .expect(201);
 
-    const res = await request(app.getHttpServer())
-      .get(`/url/${alias}`)
-      .expect(302);
+    const res = await request(app.getHttpServer()).get(`/${alias}`).expect(302);
 
     expect(res.headers.location).toBe(originalUrl);
   });
