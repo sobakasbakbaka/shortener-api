@@ -12,8 +12,6 @@ export const LinkAnalyticsModal = ({
   opened,
   onClose,
 }: LinkAnalyticsModalProps) => {
-  console.log('LinkAnalyticsModal', shortUrl);
-
   const { info, analytics, isLoading, isError } = useLinkAnalytics(shortUrl);
 
   return (
@@ -34,7 +32,7 @@ export const LinkAnalyticsModal = ({
             <b>Кликов:</b> {info.clickCount}
           </Text>
           <Text size="sm">
-            <b>Последние IP:</b>
+            <b>Последние 5 IP:</b>
           </Text>
           <ul style={{ paddingLeft: 16 }}>
             {analytics.lastClicks.map((ip) => (

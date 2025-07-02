@@ -3,14 +3,21 @@ import { Button, Group, Stack, Text, Title } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { LinkAnalyticsModal } from '@/features/link-analytics/ui/LinkAnalyticsModal.tsx';
 import { useDisclosure } from '@mantine/hooks';
+import { useState } from 'react';
 
 export const ShortLinkList = () => {
   const { links, removeLink, clearLinks } = useShortLinks();
   const [opened, { open, close }] = useDisclosure();
+  const [selectedLink, setSelectedLink] = useState<string | null>(null);
 
   if (links.length === 0) {
     return null;
   }
+
+  const handleOpenModal = (shortUrl: string) => {
+    setSelectedLink(shortUrl);
+    open();
+  };
 
   return (
     <Stack>
@@ -42,14 +49,14 @@ export const ShortLinkList = () => {
               {link.originalUrl}
             </Text>
           </div>
-          <div>
-            <Button onClick={open}>Подробнее</Button>
-            <LinkAnalyticsModal
-              shortUrl={link.shortUrl}
-              opened={opened}
-              onClose={close}
-            />
-
+          <Group gap={'md'}>
+            <Button
+              onClick={() => handleOpenModal(link.shortUrl)}
+              variant={'light'}
+              size={'xs'}
+            >
+              Подробнее
+            </Button>
             <Button
               color={'red'}
               size={'xs'}
@@ -58,9 +65,16 @@ export const ShortLinkList = () => {
             >
               <IconTrash size={16} />
             </Button>
-          </div>
+          </Group>
         </Group>
       ))}
+      {selectedLink && (
+        <LinkAnalyticsModal
+          shortUrl={selectedLink}
+          opened={opened}
+          onClose={close}
+        />
+      )}
     </Stack>
   );
 };

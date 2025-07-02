@@ -1,4 +1,5 @@
 import { useLocalStorage } from '@mantine/hooks';
+import { urlApi } from '@/entities/url';
 
 type ShortLink = {
   originalUrl: string;
@@ -21,8 +22,13 @@ export const useShortLinks = () => {
     });
   };
 
-  const removeLink = (shortUrl: string) => {
-    setLinks((prev) => prev.filter((link) => link.shortUrl !== shortUrl));
+  const removeLink = async (shortUrl: string) => {
+    try {
+      await urlApi.delete(shortUrl);
+      setLinks((prev) => prev.filter((link) => link.shortUrl !== shortUrl));
+    } catch (error) {
+      console.log('Ошибка удаления ссылки', error);
+    }
   };
 
   const clearLinks = () => setLinks([]);
