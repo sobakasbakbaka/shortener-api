@@ -31,12 +31,9 @@ export const useShortLinks = () => {
     }
   };
 
-  const clearLinks = () => setLinks([]);
-
   return {
     links,
     addLink,
     removeLink,
-    clearLinks,
   };
 };
