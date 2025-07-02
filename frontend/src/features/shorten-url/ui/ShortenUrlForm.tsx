@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from '@mantine/form';
 import { Button, Group, Notification, Stack, TextInput } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { IconCheck, IconX } from '@tabler/icons-react';
 import { useShortenUrl } from '../api/useShortenUrl';
-import { useShortLinks } from '../model/useShortLinks.ts';
+import { useShortLinks } from '../model/useShortLinks';
+import { CopyButton } from '@/shared/ui/CopyButton';
 import '@mantine/dates/styles.css';
 
 type FormValues = {
@@ -15,6 +16,14 @@ type FormValues = {
 
 export const ShortenUrlForm = () => {
   const [shortUrl, setShortUrl] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (copied) {
+      const timer = setTimeout(() => setCopied(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [copied]);
 
   const form = useForm<FormValues>({
     initialValues: {
@@ -88,16 +97,20 @@ export const ShortenUrlForm = () => {
       {isSuccess && shortUrl && (
         <Notification
           icon={<IconCheck size={18} />}
-          color={'green'}
-          title={'Ссылка создана'}
+          color="green"
+          title="Ссылка создана"
+          withCloseButton={false}
         >
-          <a
-            href={`${import.meta.env.VITE_API_URL}/${shortUrl}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {import.meta.env.VITE_API_URL}/{shortUrl}
-          </a>
+          <Group justify="space-between" wrap="wrap">
+            <a
+              href={`${import.meta.env.VITE_API_URL}/${shortUrl}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {import.meta.env.VITE_API_URL}/{shortUrl}
+            </a>
+            <CopyButton value={`${import.meta.env.VITE_API_URL}/${shortUrl}`} />
+          </Group>
         </Notification>
       )}
 

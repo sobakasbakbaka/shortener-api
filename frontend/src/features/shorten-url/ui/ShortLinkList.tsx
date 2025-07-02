@@ -1,9 +1,10 @@
 import { useShortLinks } from '../model/useShortLinks.ts';
 import { Button, Group, Stack, Text, Title } from '@mantine/core';
-import { IconTrash } from '@tabler/icons-react';
+import { IconChartHistogram, IconTrash } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
 import { LinkAnalyticsModal } from '@/features/link-analytics';
+import { CopyButton } from '@/shared/ui/CopyButton';
 
 export const ShortLinkList = () => {
   const { links, removeLink } = useShortLinks();
@@ -38,13 +39,16 @@ export const ShortLinkList = () => {
               {link.originalUrl}
             </Text>
           </div>
-          <Group gap={'md'}>
+          <Group gap={'sm'}>
+            <CopyButton
+              value={`${import.meta.env.VITE_API_URL}/${link.shortUrl}`}
+            />
             <Button
               onClick={() => handleOpenModal(link.shortUrl)}
-              variant={'light'}
               size={'xs'}
+              variant={'subtle'}
             >
-              Подробнее
+              <IconChartHistogram size={16} />
             </Button>
             <Button
               color={'red'}
