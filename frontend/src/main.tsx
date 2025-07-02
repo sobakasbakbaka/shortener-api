@@ -1,15 +1,18 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import {
+  AppThemeProvider,
+  ReactQueryProvider,
+  AppRouter,
+} from '@/app/providers';
 
 import '@mantine/core/styles.css';
-import { App } from '@/app/App.tsx';
-import { AppThemeProvider, ReactQueryProvider } from '@/app/providers';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ReactQueryProvider>
       <AppThemeProvider>
-        <App />
+        <AppRouter />
       </AppThemeProvider>
     </ReactQueryProvider>
   </StrictMode>,

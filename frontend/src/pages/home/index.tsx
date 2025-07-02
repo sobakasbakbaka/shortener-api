@@ -2,7 +2,7 @@ import { ShortenUrlForm, ShortLinkList } from '@/features/shorten-url';
 import { Container, Tabs } from '@mantine/core';
 import { IconLink, IconList } from '@tabler/icons-react';
 
-export const App = () => {
+export const HomePage = () => {
   return (
     <Container>
       <Tabs defaultValue={'shorten'} variant={'outline'}>

@@ -28,11 +28,11 @@ export const ShortLinkList = () => {
           <div>
             <Text size={'sm'}>
               <a
-                href={`${import.meta.env.VITE_API_URL}/${link.shortUrl}`}
+                href={`/r/${link.shortUrl}`}
                 target={'_blank'}
                 rel={'noopener noreferrer'}
               >
-                {import.meta.env.VITE_API_URL}/{link.shortUrl}
+                {window.location.href}r/{link.shortUrl}
               </a>
             </Text>
             <Text size={'xs'} c={'dimmed'}>
@@ -40,9 +40,7 @@ export const ShortLinkList = () => {
             </Text>
           </div>
           <Group gap={'sm'}>
-            <CopyButton
-              value={`${import.meta.env.VITE_API_URL}/${link.shortUrl}`}
-            />
+            <CopyButton value={`${window.location.href}r/${link.shortUrl}`} />
             <Button
               onClick={() => handleOpenModal(link.shortUrl)}
               size={'xs'}

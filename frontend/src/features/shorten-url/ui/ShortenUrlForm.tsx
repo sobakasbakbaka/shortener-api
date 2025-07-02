@@ -103,13 +103,13 @@ export const ShortenUrlForm = () => {
         >
           <Group justify="space-between" wrap="wrap">
             <a
-              href={`${import.meta.env.VITE_API_URL}/${shortUrl}`}
+              href={`/r/${shortUrl}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {import.meta.env.VITE_API_URL}/{shortUrl}
+              {window.location.href}r/{shortUrl}
             </a>
-            <CopyButton value={`${import.meta.env.VITE_API_URL}/${shortUrl}`} />
+            <CopyButton value={`${window.location.href}r/${shortUrl}`} />
           </Group>
         </Notification>
       )}
