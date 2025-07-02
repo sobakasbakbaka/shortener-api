@@ -1,24 +1,32 @@
 import { useState } from 'react';
 import { useForm } from '@mantine/form';
-import type { ShortenUrlDto } from '@/entities/url';
-import { useShortenUrl } from '../api/useShortenUrl';
 import { Button, Group, Notification, Stack, TextInput } from '@mantine/core';
+import { DateTimePicker } from '@mantine/dates';
 import { IconCheck, IconX } from '@tabler/icons-react';
+import { useShortenUrl } from '../api/useShortenUrl';
 import { useShortLinks } from '../model/useShortLinks.ts';
+import '@mantine/dates/styles.css';
+
+type FormValues = {
+  originalUrl: string;
+  alias?: string;
+  expiresAt: Date | null;
+};
 
 export const ShortenUrlForm = () => {
   const [shortUrl, setShortUrl] = useState<string | null>(null);
 
-  const form = useForm<ShortenUrlDto>({
+  const form = useForm<FormValues>({
     initialValues: {
       originalUrl: '',
       alias: '',
-      expiresAt: '',
+      expiresAt: null,
     },
     validate: {
       originalUrl: (value) =>
         /^https?:\/\/.+/.test(value) ? null : 'Введите корректный URL',
-      alias: (value) => (value!.length <= 20 ? null : 'Максимум 20 символов'),
+      alias: (value) =>
+        !value || value.length <= 20 ? null : 'Максимум 20 символов',
     },
   });
 
@@ -37,9 +45,11 @@ export const ShortenUrlForm = () => {
   });
 
   const handleSubmit = form.onSubmit((values) => {
-    const payload = Object.fromEntries(
-      Object.entries(values).filter(([_, value]) => value !== ''),
-    ) as ShortenUrlDto;
+    const payload = {
+      originalUrl: values.originalUrl,
+      alias: values.alias || undefined,
+      expiresAt: values.expiresAt || undefined,
+    };
 
     mutate(payload);
   });
@@ -58,10 +68,15 @@ export const ShortenUrlForm = () => {
           placeholder={'lol-kek'}
           {...form.getInputProps('alias')}
         />
-        <TextInput
-          label={'Дата истечения (необязательно)'}
-          placeholder={'2025-12-31T23:59:59Z'}
-          {...form.getInputProps('expiresAt')}
+        <DateTimePicker
+          label={'Срок действия (необязательно)'}
+          placeholder={'Выберите дату и время'}
+          value={form.values.expiresAt}
+          onChange={(date) =>
+            form.setFieldValue('expiresAt', date as Date | null)
+          }
+          clearable
+          minDate={new Date()}
         />
         <Group justify={'flex-end'} mt={'md'}>
           <Button type={'submit'} loading={isPending}>
@@ -93,7 +108,7 @@ export const ShortenUrlForm = () => {
           title="Ошибка"
           mt="md"
         >
-          {(error as any)?.message || 'Произошла ошибка'}
+          {(error as Error)?.message || 'Произошла ошибка'}
         </Notification>
       )}
     </Stack>

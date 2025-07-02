@@ -1,7 +1,7 @@
 export interface ShortenUrlDto {
   originalUrl: string;
   alias?: string;
-  expiresAt?: string;
+  expiresAt?: Date;
 }
 
 export interface ShortenUrlResponse {
