@@ -1,5 +1,15 @@
 import { useLinkAnalytics } from '../api/useLinkAnalytics.ts';
-import { Loader, Modal, Stack, Text } from '@mantine/core';
+import {
+  Alert,
+  List,
+  Loader,
+  Modal,
+  Paper,
+  Stack,
+  Text,
+  ThemeIcon,
+} from '@mantine/core';
+import { IconAlertTriangle, IconLink } from '@tabler/icons-react';
 
 type LinkAnalyticsModalProps = {
   shortUrl: string;
@@ -14,42 +24,76 @@ export const LinkAnalyticsModal = ({
 }: LinkAnalyticsModalProps) => {
   const { info, analytics, isLoading, isError } = useLinkAnalytics(shortUrl);
 
-  console.log('info:', info);
-
   return (
     <Modal
       opened={opened}
       onClose={onClose}
       title={'Аналитика ссылки'}
       centered
+      size={'lg'}
     >
       {isLoading && <Loader />}
-      {isError && <Text c={'red'}>Не удалось загрузить данные</Text>}
+
+      {isError && (
+        <Alert
+          color={'red'}
+          title={'Ошибка'}
+          icon={<IconAlertTriangle size={16} />}
+        >
+          {'Не удалось загрузить данные'}
+        </Alert>
+      )}
+
       {!isLoading && info && analytics && (
-        <Stack>
+        <Stack gap={'md'}>
           {info.isExpired && (
-            <Text size={'sm'} c={'red'}>
-              Сылка просрочена и больше не активна.
-            </Text>
+            <Alert
+              color={'red'}
+              icon={<IconAlertTriangle size={18} />}
+              title={'Ссылка недействительна'}
+            >
+              {'Ссылка просрочена и больше не активна.'}
+            </Alert>
           )}
-          <Text size={'sm'}>
-            <b>Оригинальный URL:</b>{' '}
-            <a href={info.originalUrl}>{info.originalUrl}</a>
-          </Text>
-          <Text size={'sm'}>
-            <b>Создана:</b> {new Date(info.createdAt).toLocaleString()}
-          </Text>
-          <Text size={'sm'}>
-            <b>Кликов:</b> {info.clickCount}
-          </Text>
-          <Text size={'sm'}>
-            <b>Последние 5 IP:</b>
-          </Text>
-          <ul style={{ paddingLeft: 16 }}>
-            {analytics.lastClicks.map((ip) => (
-              <li key={ip}>{ip}</li>
-            ))}
-          </ul>
+
+          <Paper shadow={'xs'} p={'md'} withBorder>
+            <Text size={'sm'} mb={4}>
+              <b>{'Оригинальный URL:'}</b>{' '}
+              <a
+                href={info.originalUrl}
+                target={'_blank'}
+                rel={'noopener noreferrer'}
+              >
+                {info.originalUrl}
+              </a>
+            </Text>
+            <Text size={'sm'} mb={4}>
+              <b>{'Создана:'}</b>{' '}
+              {new Date(info.createdAt).toLocaleString('ru-RU')}
+            </Text>
+            <Text size={'sm'} mb={4}>
+              <b>{'Кликов:'}</b> {info.clickCount}
+            </Text>
+          </Paper>
+
+          <Paper shadow={'xs'} p={'md'} withBorder>
+            <Text size={'sm'} mb={6}>
+              <b>{'Последние 5 IP:'}</b>
+            </Text>
+            <List
+              spacing={'xs'}
+              size={'sm'}
+              icon={
+                <ThemeIcon color={'blue'} size={16} radius={'xl'}>
+                  <IconLink size={12} />
+                </ThemeIcon>
+              }
+            >
+              {analytics.lastClicks.map((ip) => (
+                <List.Item key={ip}>{ip}</List.Item>
+              ))}
+            </List>
+          </Paper>
         </Stack>
       )}
     </Modal>
