@@ -12,12 +12,12 @@ export const RedirectPage = () => {
   useEffect(() => {
     if (!alias) return;
 
-    fetch(`http://localhost:3000/info/${alias}`)
+    fetch(`${import.meta.env.VITE_API_URL}/info/${alias}`)
       .then((res) => {
         if (res.status === 404) {
           setNotFound(true);
         } else {
-          window.location.href = `http://localhost:3000/${alias}`;
+          window.location.href = `${import.meta.env.VITE_API_URL}/${alias}`;
         }
       })
       .catch(() => {
