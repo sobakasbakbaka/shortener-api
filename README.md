@@ -72,7 +72,7 @@ docker-compose up --build
 
 Доступ к сервисам:
 
-* 🌐 Frontend: [http://localhost](http://localhost)
+* 🌐 Frontend: [http://localhost:5173](http://localhost:5173)
 * 🛠️ Backend API: [http://localhost:3000](http://localhost:3000)
 
 ### 🛠️ Для разработки:
