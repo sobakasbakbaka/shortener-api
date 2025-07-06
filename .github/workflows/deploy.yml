@@ -1,7 +1,10 @@
-name: Backend CI
+name: Backend CI/CD
 
 on:
   push:
+    paths:
+      - 'backend/**'
+  pull_request:
     paths:
       - 'backend/**'
 
@@ -45,3 +48,19 @@ jobs:
           POSTGRES_PASSWORD: 123
           POSTGRES_DB: url_shortener_test
         run: npm run test:e2e
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Railway CLI
+        run: npm install -g railway
+
+      - name: Deploy to Railway
+        run: railway up --service backend
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
