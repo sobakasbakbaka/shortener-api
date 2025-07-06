@@ -27,6 +27,6 @@ jobs:
         run: npm run build
 
       - name: Deploy frontend to Railway
-        run: npx @railway/cli up --service shortner-front
+        run: npx @railway/cli up --service shorten-url-frontend
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_FRONTEND }}
