@@ -29,4 +29,4 @@ jobs:
       - name: Deploy frontend to Railway
         run: npx @railway/cli up --service shortner-front
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_FRONTEND }}
