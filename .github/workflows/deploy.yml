@@ -1,38 +1,40 @@
-name: CI/CD to Railway
+name: Deploy to Railway
 
 on:
   push:
     branches: [main]
 
 jobs:
-  build-and-deploy:
+  test-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Install backend deps
-        working-directory: backend
-        run: npm ci
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+            node-version: '18'
+
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: npm install
 
       - name: Run backend tests
-        working-directory: backend
-        run: npm test
+        working-directory: ./backend
+        run: npm run test:e2e
 
       - name: Install Railway CLI
-        run: npm install -g @railway/cli
+        run: curl -fsSL https://railway.app/install.sh | sh
 
-      - name: Deploy to Railway (backend)
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: |
-          cd backend
-          railway up --service shortner-back --detach
+      - name: Set Railway token
+        run: railway login --token ${{ secrets.RAILWAY_TOKEN }}
 
-      - name: Deploy to Railway (frontend)
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: |
-          cd ../frontend
-          railway up --service shortner-front --detach
+      - name: Deploy to Railway
+        working-directory: ./backend
+        run: railway up --service shortner-back
+
+      - name: Deploy frontend
+        working-directory: ./frontend
+        run: railway up --service shortner-front
