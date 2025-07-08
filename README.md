@@ -8,6 +8,8 @@
 
 🚀 [Посмотреть онлайн](https://shorten-url-frontend-production.up.railway.app/)
 
+📑 [Swagger-документация backend API](https://shortner-back-production.up.railway.app/api#/)
+
 ---
 
 ## 📦 Стек технологий
